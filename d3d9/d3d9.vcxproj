@@ -14,6 +14,7 @@
     <ProjectGuid>{7541E660-DC77-4AAF-B9C3-2310723EB1AC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>d3d9</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -44,6 +45,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>E:\Users\Marsh IV\Documents\Github\DirectX-Wrappers\nv_dds;E:\Users\Marsh IV\Documents\Github\DirectX-Wrappers\hash-library;$(IncludePath)</IncludePath>
+    <SourcePath>E:\Users\Marsh IV\Documents\Github\DirectX-Wrappers\hash-library;E:\Users\Marsh IV\Documents\Github\DirectX-Wrappers\nv_dds;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -67,6 +70,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <PreprocessorDefinitions>_WINDLL;%(PreprocessorDefinitions);NV_DDS_NO_GL_SUPPORT</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -76,6 +80,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\hash-library\crc32.cpp" />
+    <ClCompile Include="..\hash-library\digest.cpp" />
+    <ClCompile Include="..\hash-library\keccak.cpp" />
+    <ClCompile Include="..\hash-library\md5.cpp" />
+    <ClCompile Include="..\hash-library\sha1.cpp" />
+    <ClCompile Include="..\hash-library\sha256.cpp" />
+    <ClCompile Include="..\hash-library\sha3.cpp" />
+    <ClCompile Include="..\nv_dds\nv_dds.cpp" />
     <ClCompile Include="IDirect3D9.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="IDirect3D9Ex.cpp" />
@@ -96,7 +108,9 @@
     <ClCompile Include="IDirect3DVolumeTexture9.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\nv_dds\nv_dds.h" />
     <ClInclude Include="AddressLookupTable.h" />
+    <ClInclude Include="ConvinienceHelpers.h" />
     <ClInclude Include="d3d9.h" />
     <ClInclude Include="IDirect3D9.h" />
     <ClInclude Include="IDirect3D9Ex.h" />

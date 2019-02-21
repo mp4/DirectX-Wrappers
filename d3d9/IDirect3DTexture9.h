@@ -45,4 +45,9 @@ public:
 	STDMETHOD(LockRect)(THIS_ UINT Level, D3DLOCKED_RECT* pLockedRect, CONST RECT* pRect, DWORD Flags);
 	STDMETHOD(UnlockRect)(THIS_ UINT Level);
 	STDMETHOD(AddDirtyRect)(THIS_ CONST RECT* pDirtyRect);
+
+	int original_width, original_height, original_levels;
+	D3DFORMAT original_format;
+
+	void ScrapeTexture();
 };

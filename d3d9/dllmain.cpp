@@ -15,6 +15,8 @@
 */
 
 #include "d3d9.h"
+#include <iostream>
+#include <experimental/filesystem>
 
 std::ofstream Log::LOG("d3d9.log");
 
@@ -46,6 +48,9 @@ bool WINAPI DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 		GetSystemDirectoryA(path, MAX_PATH);
 		strcat_s(path, "\\d3d9.dll");
 		Log() << "Loading " << path;
+		std::experimental::filesystem::create_directory("dumped_texture_files");
+		Log() << "Creating texture dump directory" << "dumped_texture_files";
+
 		d3d9dll = LoadLibraryA(path);
 
 		// Get function addresses

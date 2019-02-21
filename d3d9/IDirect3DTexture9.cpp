@@ -15,6 +15,9 @@
 */
 
 #include "d3d9.h"
+#include "ConvinienceHelpers.h"
+#include "nv_dds.h"
+#include "sha256.h"
 
 HRESULT m_IDirect3DTexture9::QueryInterface(THIS_ REFIID riid, void** ppvObj)
 {
@@ -159,7 +162,47 @@ HRESULT m_IDirect3DTexture9::LockRect(THIS_ UINT Level, D3DLOCKED_RECT* pLockedR
 
 HRESULT m_IDirect3DTexture9::UnlockRect(THIS_ UINT Level)
 {
-	return ProxyInterface->UnlockRect(Level);
+	Log() << "UnlockRect " << original_width << " " << original_height << " " << GetNameOfTextureFormat(original_format) << " " << Level;
+	HRESULT rez = ProxyInterface->UnlockRect(Level);
+	
+	
+	//lock rect and scrape the image
+	if (Level == 0)
+	{	
+		ScrapeTexture();
+	}
+
+
+	return rez;
+}
+
+void m_IDirect3DTexture9::ScrapeTexture()
+{
+	switch (original_format)
+	{
+	case D3DFMT_DXT1:
+		{
+			D3DLOCKED_RECT r;
+			ProxyInterface->LockRect(0, &r, nullptr, 0);
+			int size = original_width * original_height / 2;
+			nv_dds::CTexture tex(original_width, original_height, 1, size , reinterpret_cast<uint8_t*>(r.pBits));
+			nv_dds::CDDSImage img;
+			img.create_textureFlat(0x83F1, 3, tex);
+
+			//get the hash of the image
+			SHA256 sha256;
+			std::string hash = sha256(r.pBits, size);
+			Log() << "texture hash: " << hash;
+
+			std::string filename = "dumped_texture_files/t" + hash + ".dds";
+			img.save(filename);
+			ProxyInterface->UnlockRect(0);
+		}
+		break;
+	default:
+		Log() << "Not supported format for texture scraping";
+		break;
+	}
 }
 
 HRESULT m_IDirect3DTexture9::AddDirtyRect(THIS_ CONST RECT* pDirtyRect)
