@@ -16,7 +16,7 @@
 
 #include "d3d9.h"
 
-std::ofstream Log::LOG("d3d9.log");
+std::ofstream Log::LOG("d3d9.csv");
 
 Direct3DShaderValidatorCreate9Proc m_pDirect3DShaderValidatorCreate9;
 PSGPErrorProc m_pPSGPError;
