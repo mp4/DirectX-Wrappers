@@ -139,6 +139,7 @@ HRESULT m_IDirect3DDevice9::CreateRenderTarget(THIS_ UINT Width, UINT Height, D3
 HRESULT m_IDirect3DDevice9::CreateTexture(THIS_ UINT Width, UINT Height, UINT Levels, DWORD Usage, D3DFORMAT Format, D3DPOOL Pool, IDirect3DTexture9** ppTexture, HANDLE* pSharedHandle)
 {
 	HRESULT hr = ProxyInterface->CreateTexture(Width, Height, Levels, Usage, Format, Pool, ppTexture, pSharedHandle);
+	Log() << "Create Texture " << Width << " , " << Height << " , " << Levels << " , " << Format << " , " << *ppTexture;
 
 	if (SUCCEEDED(hr) && ppTexture)
 	{

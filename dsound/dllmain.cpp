@@ -73,6 +73,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD fdwReason, LPVOID lpReserved)
 
 HRESULT WINAPI DirectSoundCreate(LPCGUID pcGuidDevice, LPDIRECTSOUND *ppDS, LPUNKNOWN pUnkOuter)
 {
+	Log() << "DirectSoundCreate " << pcGuidDevice;
 	if (!m_pDirectSoundCreate)
 	{
 		return E_FAIL;

@@ -154,15 +154,26 @@ HRESULT m_IDirect3DTexture9::GetSurfaceLevel(THIS_ UINT Level, IDirect3DSurface9
 
 HRESULT m_IDirect3DTexture9::LockRect(THIS_ UINT Level, D3DLOCKED_RECT* pLockedRect, CONST RECT* pRect, DWORD Flags)
 {
+	Log() << "Lock Rect " << Level << " , " << this;
 	return ProxyInterface->LockRect(Level, pLockedRect, pRect, Flags);
 }
 
 HRESULT m_IDirect3DTexture9::UnlockRect(THIS_ UINT Level)
 {
+	Log() << "Unlock Rect " << Level << " , " << this;
 	return ProxyInterface->UnlockRect(Level);
 }
 
 HRESULT m_IDirect3DTexture9::AddDirtyRect(THIS_ CONST RECT* pDirtyRect)
 {
 	return ProxyInterface->AddDirtyRect(pDirtyRect);
+}
+
+void m_IDirect3DTexture9::ScrapeTexture()
+{
+
+}
+void m_IDirect3DTexture9::ReplaceTexture()
+{
+
 }
